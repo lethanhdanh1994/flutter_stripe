@@ -423,6 +423,9 @@ internal fun mapToBillingDetails(billingDetails: ReadableMap?, cardAddress: Addr
   if (billingDetails == null) {
     return null
   }
+
+  val addressDetails = getMapOrNull(billingDetails, "address")
+
   val address = Address.Builder()
     .setPostalCode(getValOr(addressDetails, "postalCode"))
     .setCity(getValOr(addressDetails, "city"))
@@ -442,7 +445,7 @@ internal fun mapToBillingDetails(billingDetails: ReadableMap?, cardAddress: Addr
 //    }
 
   return PaymentMethod.BillingDetails.Builder()
-    .setAddress(address.build())
+    .setAddress(address)
     .setName(getValOr(billingDetails, "name"))
     .setPhone(getValOr(billingDetails, "phone"))
     .setEmail(getValOr(billingDetails, "email"))
